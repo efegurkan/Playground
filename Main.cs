@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace proje1
 {
+
     class Otel
     {
 
@@ -27,7 +28,7 @@ namespace proje1
     class Konuk
     {
         public string ad, soyad, dil;
-
+	public Konuk() {}
         public void yazdır()
         {
             Console.WriteLine("Adı:" + ad + "\tSoyadı:" + soyad + "\tDili:" + dil);
@@ -70,26 +71,43 @@ namespace proje1
     }
 
 
+	
 
-    class MainClass
-    {
-        public static void Main(string[] args)
-        {
-            otel_bilgisi_alma();
+	
+		
+	class MainClass
+	{		
+		public static void Main (string[] args)
+		{
+			string[,] ad_soyad={{"ibrahim","vladimir","emre","johnny","mona","sherlock","bruce","michael","padme","mace","christopher","frodo","omer","obiwan","anakin","john","morgan","david","lee","christian"},
+                {"uzum","dost","lenin","vitamin","jin","oztekin","cakir","depp","yong","skywalker","kenobi","wayne","windu","baggins","amidala","corleone","holmes","connor","lisa","freeman"}};
+            string[] yabanci_dil = { "TR", "ENG", "GER", "FRE", "JAP", "CHN", "RUS" };
 
-        }
-        static void otel_bilgisi_alma()
-        {
-            Console.WriteLine("Otel sayisini giriniz:");
-            int sayi = Convert.ToInt32(Console.ReadLine());
+			otel_bilgisi_alma();
+			
+		}
+		static void otel_bilgisi_alma()
+		{
+			Console.WriteLine("Otel sayisini giriniz:");
+			int sayi=Convert.ToInt32(Console.ReadLine());
+			
+			Otel[] bir_otel=new Otel[sayi];
+			for(int i=0; i<sayi; i++)
+			{   
+				bir_otel[i]=new Otel();
+				bir_otel[i].bilgi_al();
+				
+			}
+		}
+		static void konuk_sayisi_alma()
+		{
+			Console.Write("Konuk sayısını giriniz:");
+			int konuk_say=Convert.ToInt32(Console.ReadLine());
+			
+			//Konuk bir_konuk
+			
+		}
+	}
 
-            Otel[] bir_otel = new Otel[sayi];
-            for (int i = 0; i < sayi; i++)
-            {
-                bir_otel[i] = new Otel();
-                bir_otel[i].bilgi_al();
-            }
-        }
-    }
 }
 
