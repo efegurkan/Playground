@@ -28,7 +28,7 @@ namespace proje1
     class Konuk
     {
         public string ad, soyad, dil;
-	public Konuk() {}
+		public Konuk() {}
         public void yazdır()
         {
             Console.WriteLine("Adı:" + ad + "\tSoyadı:" + soyad + "\tDili:" + dil);
@@ -84,6 +84,7 @@ namespace proje1
             string[] yabanci_dil = { "TR", "ENG", "GER", "FRE", "JAP", "CHN", "RUS" };
 
 			otel_bilgisi_alma();
+			Islem bir_islem=new Islem(konuk_sayisi_alma(),ad_soyad,yabanci_dil);
 			
 		}
 		static void otel_bilgisi_alma()
@@ -99,13 +100,11 @@ namespace proje1
 				
 			}
 		}
-		static void konuk_sayisi_alma()
+		static int konuk_sayisi_alma()
 		{
 			Console.Write("Konuk sayısını giriniz:");
 			int konuk_say=Convert.ToInt32(Console.ReadLine());
-			
-			//Konuk bir_konuk
-			
+			return konuk_say;
 		}
 	}
 
