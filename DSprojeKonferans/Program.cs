@@ -121,16 +121,26 @@ namespace proje1
                 }
                 bir_otel[i].yuzde = (double)bir_otel[i].kalan / (double)bir_otel[i].kontenjan;
             }
-            /*if(konuksayisi>0)
-            {
-                Queue<int> artanekleme = new Queue<int>();
-                for(int i=0; i<otelSayi;++i)
-                {
-					
-                }
-            }
-            */
+            			if (konuksayisi > 0) {
+				int min = 100, index=0;
+				
+				//Queue<int> artanekleme = new Queue<int>();
+				while (konuksayisi!=0) {
+					for (int j=0; j<otelSayi; ++j) {
+						if (bir_otel [j].yuzde < min && bir_otel[j].kontenjan-bir_otel[j].kalan!=0)
+							index = j;
+						else if (bir_otel [j].yuzde == min && (bir_otel [j].kontenjan - bir_otel [j].kalan) < (bir_otel [index].kontenjan - bir_otel [index].kalan)) {
+							index = j;
+						}
+					bir_otel[index].kalanlar.Add (konuklist [ilkdeger - konuksayisi]);
+					++bir_otel[index].kalan;
+					--konuksayisi;
+					++dolasimSayaci;
+					bir_otel [index].yuzde = (double)bir_otel [index].kalan / (double)bir_otel [index].kontenjan;
+					}
+
         }
+                        }
 
         static Otel[] otel_bilgisi_alma(int sayi)
         {
