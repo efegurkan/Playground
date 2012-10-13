@@ -100,7 +100,7 @@ namespace proje1
         }
         static void otel_yerleştirme(Otel[] bir_otel, Konuk[] konuklist, int konuksayisi, int otelSayi)
         {
-            int toplamKontenjan = 0, dolasimSayaci = 0;
+            int toplamKontenjan = 0, dolasimSayaci = 0, ilkdeger = konuksayisi;
             double bolunecekOran, yerlesecek;
 
             for (int i = 0; i < otelSayi; ++i)
@@ -121,26 +121,89 @@ namespace proje1
                 }
                 bir_otel[i].yuzde = (double)bir_otel[i].kalan / (double)bir_otel[i].kontenjan;
             }
-            			if (konuksayisi > 0) {
-				int min = 100, index=0;
-				
-				//Queue<int> artanekleme = new Queue<int>();
-				while (konuksayisi!=0) {
-					for (int j=0; j<otelSayi; ++j) {
-						if (bir_otel [j].yuzde < min && bir_otel[j].kontenjan-bir_otel[j].kalan!=0)
-							index = j;
-						else if (bir_otel [j].yuzde == min && (bir_otel [j].kontenjan - bir_otel [j].kalan) < (bir_otel [index].kontenjan - bir_otel [index].kalan)) {
-							index = j;
-						}
-					bir_otel[index].kalanlar.Add (konuklist [ilkdeger - konuksayisi]);
-					++bir_otel[index].kalan;
-					--konuksayisi;
-					++dolasimSayaci;
-					bir_otel [index].yuzde = (double)bir_otel [index].kalan / (double)bir_otel [index].kontenjan;
-					}
+            if (konuksayisi > 0)
+            {
+                int min = 100, index = 0;
+                while (konuksayisi != 0)
+                {
+                    for (int j = 0; j < otelSayi; ++j)
+                    {
+                        if (bir_otel[j].yuzde < min && bir_otel[j].kontenjan - bir_otel[j].kalan != 0)
+                            index = j;
+                        else if (bir_otel[j].yuzde == min && (bir_otel[j].kontenjan - bir_otel[j].kalan) < (bir_otel[index].kontenjan - bir_otel[index].kalan))
+                        {
+                            index = j;
+                        }
+                        bir_otel[index].kalanlar.Add(konuklist[ilkdeger - konuksayisi]);
+                        ++bir_otel[index].kalan;
+                        --konuksayisi;
+                        ++dolasimSayaci;
+                        bir_otel[index].yuzde = (double)bir_otel[index].kalan / (double)bir_otel[index].kontenjan;
+                    }
+
+                }
+            }
+        }
+
+        static void dilKontrol(Konuk[] konukList)
+        {
+            int[] kontrol = {0,0,0,0,0,0,0};
+            string[] arama = { "TR", "ENG", "GER", "FRE", "JAP", "CHN", "RUS" };
+            ArrayList tek = new ArrayList();
+            Konuk yazdir = new Konuk();
+
+            for(int i=0; i<konukList.Length; i++)//Konuk tek kalma için listesi kontrol edilir
+            {
+                
+                switch(konukList[i].dil){
+                    case "TR":
+                        kontrol[0]++;
+                        break;
+                    case "ENG":
+                        kontrol[1]++;
+                        break;
+                    case "GER":
+                        kontrol[2]++;
+                        break;
+                    case "FRE":
+                        kontrol[3]++;
+                        break;
+                    case "JAP":
+                        kontrol[4]++;
+                        break;
+                    case "CHN":
+                        kontrol[5]++;
+                        break;
+                    case "RUS":
+                        kontrol[6]++;
+                        break;
+            }
+                foreach (int j in kontrol)
+                {
+                    if ( kontrol[j] == 1 )
+                    {
+                        for (int k = 0; k < konukList.Length; k++)
+                        {
+                            if (arama[j].Equals(konukList[k].dil) == true)//yalnız kalacakları belirle
+                                tek.Add(konukList[k]);
+                        }
+                    }
+                }
+            }
+            if (tek.Count != 0)
+            {
+                Console.WriteLine("Aşağıda listelenen kişiler aynı dilde tek katılımcı olduğundan mecburen yalnız kalacaklardır!");
+                for (int i = 0; i < tek.Count; i++)
+                {
+                    yazdir = (Konuk)tek[i];
+                    yazdir.yazdır();
+                }
+                Console.WriteLine("Devam etmek için bir tuşa basın.");
+                Console.ReadKey();
+            }
+            //return tek;
 
         }
-                        }
 
         static Otel[] otel_bilgisi_alma(int sayi)
         {
