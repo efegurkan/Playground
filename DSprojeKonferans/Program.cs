@@ -56,8 +56,8 @@ namespace proje1
         {
             Konuk[] konuklar = new Konuk[konuk_say];
             Random random_sayi1 = new Random((int)DateTime.Now.Ticks);
-            Random random_sayi2 = new Random((int)DateTime.Now.Ticks);
-            Random random_sayi3 = new Random((int)DateTime.Now.Ticks);
+            //Random random_sayi2 = new Random((int)DateTime.Now.Ticks);
+            //Random random_sayi3 = new Random((int)DateTime.Now.Ticks);
 
             for (int i = 0; i < konuk_say; i++)
             {
@@ -65,8 +65,8 @@ namespace proje1
                 konuklar[i] = new Konuk();
 
                 int a = random_sayi1.Next(20);
-                int b = random_sayi2.Next(20);
-                int c = random_sayi3.Next(6);
+                int b = random_sayi1.Next(20);
+                int c = random_sayi1.Next(7);
 
                 konuklar[i].ad = isim_matrisi[0, a];
                 konuklar[i].soyad = isim_matrisi[1, b];
@@ -95,26 +95,25 @@ namespace proje1
 
             Otel[] otelList = otel_bilgisi_alma(otelsayi);
 
-            int konuk_say = konuk_sayisi_alma();
+            int konuk_say = konuk_sayisi_alma(otelList);
             Islem bir_islem = new Islem(konuk_say, ad_soyad, yabanci_dil);
 
             otel_yerleştirme(otelList, bir_islem.konuk_dizi_olusturma(), konuk_say, otelsayi);
+            otelBazındaKonukListe(otelList);
+            Console.ReadKey();
         }
         static void otel_yerleştirme(Otel[] bir_otel, Konuk[] konuklist, int konuksayisi, int otelSayi)
         {
-            int toplamKontenjan = 0, dolasimSayaci = 0, ilkdeger = konuksayisi;
+            int toplamKontenjan = 0, dolasimSayaci = 0, ilkdeger = konuksayisi,gecici=0;
             double bolunecekOran, yerlesecek;
 
-            for (int i = 0; i < otelSayi; ++i)
-            {
-                toplamKontenjan += bir_otel[i].kontenjan;
-            }
+            toplamKontenjan = kontenjanAl(bir_otel);
             bolunecekOran = (double)toplamKontenjan / konuksayisi;
 
             for (int i = 0; i < otelSayi; ++i)
             {
                 yerlesecek = Math.Round((double)bir_otel[i].kontenjan / bolunecekOran);
-                for (int j = dolasimSayaci; j < yerlesecek; ++j)
+                for (int j = dolasimSayaci; j < yerlesecek+gecici; ++j)
                 {
                     bir_otel[i].kalanlar.Add(konuklist[j]);
                     konuklist[j].kaldigiIndex=anadilIndex(konuklist[j].dil);
@@ -123,6 +122,7 @@ namespace proje1
                     ++dolasimSayaci;
                     --konuksayisi;
                 }
+                gecici = dolasimSayaci;
                 bir_otel[i].yuzde = (double)bir_otel[i].kalan / (double)bir_otel[i].kontenjan;
             }
             if (konuksayisi > 0)
@@ -143,6 +143,8 @@ namespace proje1
                         --konuksayisi;
                         ++dolasimSayaci;
                         bir_otel[index].yuzde = (double)bir_otel[index].kalan / (double)bir_otel[index].kontenjan;
+                        if (konuksayisi == 0)
+                            break;
                     }
 
                 }
@@ -177,6 +179,19 @@ namespace proje1
                     break;
             }
             return donus;
+        }
+        static void otelBazındaKonukListe(Otel[] otelList)
+        {
+            Konuk yazdir = new Konuk();
+            for (int i = 0; i < otelList.Length; i++)
+            {
+                Console.WriteLine(otelList[i].otel_isim+" Oteli Konuk Listesi:");
+                for (int j=0; j<otelList[i].kalanlar.Count;j++)
+                {
+                    yazdir = (Konuk)otelList[i].kalanlar[j];
+                    yazdir.yazdır();
+                }
+            }
         }
         static ArrayList transferListesiAl(Otel[] otelList,ArrayList tek)
         {
@@ -238,16 +253,22 @@ namespace proje1
             return tek;
 
         }
+        static int kontenjanAl(Otel[] otelList)
+        {
+            int toplamKont = 0;
+
+            for (int i = 0; i < otelList.Length; i++)
+                toplamKont += otelList[i].kontenjan;
+
+            return toplamKont;
+        }
         static void transferEt(Otel[] otelList,Konuk[] konukList ,ArrayList tek)
         {
             ArrayList transfer = new ArrayList();
             Konuk konukNesne = new Konuk();
             Konuk konukKarsilastirma = new Konuk();
-            int toplamKont=0;
+            int toplamKont = kontenjanAl(otelList);
             transfer = transferListesiAl(otelList, tek);
-
-            for (int i = 0; i < otelList.Length; i++)
-                toplamKont += otelList[i].kontenjan;
 
             if (konukList.Length != toplamKont)
             {
@@ -331,11 +352,23 @@ namespace proje1
             }
             return bir_otel;
         }
-        static int konuk_sayisi_alma()
+        static int konuk_sayisi_alma(Otel[] otelList)
         {
+            int kontenjan=kontenjanAl(otelList);
+            int konuk_say = 0;
+            bool flag=true;
+            do{
             Console.Write("Konuk sayısını giriniz:");
-            int konuk_say = Convert.ToInt32(Console.ReadLine());
-            return konuk_say;
+            konuk_say = Convert.ToInt32(Console.ReadLine());
+            if (konuk_say > kontenjan)
+            {
+                flag = false;
+                Console.WriteLine("Konuk sayısı kontenjandan fazla! Konuk sayısını tekrar girin.");
+            }
+            else
+                flag = true;
+            }while(!flag);
+                return konuk_say;
         }
     }
 
