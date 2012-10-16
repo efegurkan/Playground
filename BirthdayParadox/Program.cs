@@ -4,18 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 class BirTakvim
 {
-    public int[][] kalendar;
-    public int ç_say;
-}
+    public int[][] kalendar = new int[12][];
 
+    public void takvim_sıfır(int[][] tak)
+    {
+        for (int i = 0; i < tak.Length; i++)
+        {
+            for (int j = 0; j < tak[i].Length; j++)
+            {
+                tak[i][j] = 0;
+            }
+        }
+    }
+    public BirTakvim()
+    {
+
+        kalendar[0] = new int[31];
+        kalendar[1] = new int[28];
+        kalendar[2] = new int[31];
+        kalendar[3] = new int[30];
+        kalendar[4] = new int[31];
+        kalendar[5] = new int[30];
+        kalendar[6] = new int[31];
+        kalendar[7] = new int[31];
+        kalendar[8] = new int[30];
+        kalendar[9] = new int[31];
+        kalendar[10] = new int[30];
+        kalendar[11] = new int[31];
+        takvim_sıfır(kalendar);
+    }
+
+
+}
 
 namespace Proje2
 {
+
     class MainClass
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
             int secim;
             int[][] takvim = new int[12][];//Birthday paradoxta kullanılacak takvim
@@ -194,14 +224,21 @@ namespace Proje2
                 Console.Write(ay_listesi[i] + ": ");
                 for (int j = 0; j < calender[i].Length; j++)
                 {
-                    Console.Write(calender[i][j] + " ");
+                    if (calender[i][j] >= 2)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    Console.Write(calender[i][j]);
+                    Console.ResetColor();
+                    Console.Write(" ");
                 }
                 Console.WriteLine();
             }
 
         }
 
-        static void ozel_coklu_dogumGunu_uretme(int[][] calendar2, int[][] calendar3, int[][] calendar4)//D seçeneğindeki problem için kullanılan metotturqqqqqqqqqqqq
+        static void ozel_coklu_dogumGunu_uretme(int[][] calendar2, int[][] calendar3, int[][] calendar4)//D seçeneğindeki problem için kullanılan metottur
         {
             int number = 120;
             int[] array2;
@@ -335,7 +372,11 @@ namespace Proje2
         static void n_degerleri_icin_uretim(int[][] ajanda)
         {
             int[] n = { 5, 10, 50, 100, 500 };
+            int[] cakisma_dizisi = new int[50];
             int[] array;
+
+            for (int z = 0; z < 50; z++)
+                cakisma_dizisi[z] = 0;
 
 
             BirTakvim[] takvimler = new BirTakvim[50];
@@ -347,12 +388,13 @@ namespace Proje2
 
             Random x = new Random();
             Random y = new Random();
+            int l = 0;
 
             for (int k = 0; k < n.Length; k++)
             {
                 for (int h = 0; h < 10; h++)
                 {
-                    int l = 0;
+
 
                     for (int i = 0; i < n[k]; i++)
                     {
@@ -378,13 +420,12 @@ namespace Proje2
                             }
                         }
 
-                        ajanda[array[1]][array[0]] += 1;//takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
+                        takvimler[l].kalendar[array[1]][array[0]] += 1;//takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
 
 
                     }
-                    takvimler[l].kalendar = ajanda;
-                    takvimler[l].ç_say = cakışma_say_bul(ajanda);
-                    takvim_sıfırla(ajanda);
+                    int deney_çakışma = cakışma_say_bul(takvimler[l].kalendar);
+                    cakisma_dizisi[l] = deney_çakışma;
                     l += 1;
 
                 }
@@ -455,17 +496,27 @@ namespace Proje2
                     break;
 
 
-                case 2: for (int i = 0; i < 5; i++)
-                    {
+                case 2:
+                    float ortalama = 0;
+                    int u = 0;
+                    string[] deney = { "n=5\t", "n=10\t", "n=50\t", "n=100\t", "n=500\t" };
+                    Console.WriteLine("        1.   2.    3.    4.     5.    6.    7.    8.     9.    10.   ort\n");
 
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Console.Write(deney[i]);
                         for (int j = 0; j < 10; j++)
                         {
 
-                            int u = 0;
-                            Console.WriteLine(takvimler[u].ç_say);
+                            Console.Write(String.Format("{0,-5}", cakisma_dizisi[u]));
+                            Console.Write(" ");
+                            ortalama += cakisma_dizisi[u];
                             u += 1;
+
                         }
-                        Console.WriteLine("\n");
+                        Console.Write(ortalama / 10);
+                        Console.WriteLine();
+
                     }
                     break;
 
