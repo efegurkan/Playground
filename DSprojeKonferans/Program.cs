@@ -17,12 +17,13 @@ namespace proje1
 
         public Otel() { kalan = 0; yuzde = 0; }
 
-        public void bilgi_al()
+        public void bilgi_al(int i)
         {
-            Console.WriteLine("Otel adını giriniz:");
+            Console.WriteLine((i+1)+". otelin adını giriniz:");
             otel_isim = Console.ReadLine();
-            Console.WriteLine("Kontenjanı giriniz:");
+            Console.WriteLine("\n"+otel_isim+" Oteli'nin kontenjanını giriniz:");
             kontenjan = Convert.ToInt32(Console.ReadLine());
+            Console.Clear();
         }
     }
 
@@ -33,7 +34,7 @@ namespace proje1
         public Konuk() { }
         public void yazdır()
         {
-            Console.WriteLine("Adı:" + ad + "\tSoyadı:" + soyad + "\tDili:" + dil);
+            Console.WriteLine(String.Format("Adı:{0,-15}Soyadı:{1,-15}Dili:{2,-10}",ad,soyad,dil));
         }
     }
 
@@ -76,10 +77,18 @@ namespace proje1
             string[] yabanci_dil = { "TR", "ENG", "GER", "FRE", "JAP", "CHN", "RUS" };
 
             Console.WriteLine("\tKonferans Otel Yerleştirme");
+
+            hakkinda();
+            Console.WriteLine("\nDevam etmek için bir tuşa basın...");
+            Console.ReadKey();
+            Console.Clear();
+
+            Console.WriteLine("\tKonferans Otel Yerleştirme");
             Console.WriteLine("");
 
-            Console.WriteLine("Otel sayisini giriniz:");
+            Console.WriteLine("Otel sayısını giriniz:");
             int otelsayi = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine();
 
             Otel[] otelList = otel_bilgisi_alma(otelsayi);
 
@@ -98,15 +107,20 @@ namespace proje1
         }
 
         static void hakkinda()
-        { 
+        {
+            Console.WriteLine("Yazarlar: \n Efe Gürkan Yalaman - efeyalaman@gmail.com "+
+                "\n İbrahim Üzüm - ibrahimuzum92@yahoo.com.tr \n Burak Emre Dost - burakemredost@gmail.com"+
+                "\n Doğukan Sever - dogukansever@hotmail.com.tr\n");
+            Console.WriteLine("Lisans bilgileri:\n GNU GPL v2.1");
         }
 
-        static int menu()
-        {
-            Console.WriteLine("");
-            int secim = Convert.ToInt32(Console.ReadLine());
-            return secim;
-        }
+        //static int menu()
+        //{
+        //    Console.WriteLine("");
+        //    int secim = Convert.ToInt32(Console.ReadLine());
+        //    return secim;
+
+        //}
         static void otel_yerleştirme(Otel[] bir_otel, Konuk[] konuklist, int konuksayisi, int otelSayi)
         {
             int toplamKontenjan = 0, dolasimSayaci = 0, ilkdeger = konuksayisi, gecici = 0;
@@ -191,12 +205,13 @@ namespace proje1
             Konuk yazdir = new Konuk();
             for (int i = 0; i < otelList.Length; i++)
             {
-                Console.WriteLine(otelList[i].otel_isim + " Oteli Konuk Listesi:");
+                Console.WriteLine(otelList[i].otel_isim + " Oteli Konuk Listesi:\n");
                 for (int j = 0; j < otelList[i].kalanlar.Count; j++)
                 {
                     yazdir = (Konuk)otelList[i].kalanlar[j];
                     yazdir.yazdır();
                 }
+                Console.WriteLine();
             }
         }
 
@@ -250,15 +265,19 @@ namespace proje1
 
             if (tek.Count != 0)
             {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("Aşağıda listelenen kişiler aynı dilde tek katılımcı olduğundan mecburen yalnız kalacaklardır!");
+                Console.ResetColor();
                 for (int i = 0; i < tek.Count; i++)
                 {
                     yazdir = (Konuk)tek[i];
                     yazdir.yazdır();
                 }
-                Console.WriteLine("Devam etmek için bir tuşa basın.");
+                Console.WriteLine("\nDevam etmek için bir tuşa basın.");
                 Console.ReadKey();
             }
+            Console.Clear();
             return tek;
         }
 
@@ -321,7 +340,7 @@ namespace proje1
             for (int i = 0; i < sayi; i++)
             {
                 bir_otel[i] = new Otel();
-                bir_otel[i].bilgi_al();
+                bir_otel[i].bilgi_al(i);
             }
             return bir_otel;
         }
@@ -335,6 +354,7 @@ namespace proje1
             {
                 Console.Write("Konuk sayısını giriniz:");
                 konuk_say = Convert.ToInt32(Console.ReadLine());
+                Console.Clear();
                 if (konuk_say > kontenjan)
                 {
                     flag = false;
