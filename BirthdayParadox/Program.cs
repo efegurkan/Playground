@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class BirTakvim
+class BirTakvim // Bir takvime ait bilgileri içeren sınıftır
 {
     public int[][] kalendar = new int[12][];
 
@@ -19,7 +19,8 @@ class BirTakvim
             }
         }
     }
-    public BirTakvim()
+
+    public BirTakvim()// Constructor
     {
 
         kalendar[0] = new int[31];
@@ -48,7 +49,7 @@ namespace Proje2
         static void Main(string[] args)
         {
             int secim;
-            int[][] takvim = new int[12][];//Birthday paradoxta kullanılacak takvim
+            int[][] takvim = new int[12][];
             takvim[0] = new int[31];
             takvim[1] = new int[28];
             takvim[2] = new int[31];
@@ -63,7 +64,7 @@ namespace Proje2
             takvim[11] = new int[31];
             takvim_sıfırla(takvim);
 
-            int[][] takvim2 = new int[12][];//d seçeneğindeki problem için kullanılacak takvim
+            int[][] takvim2 = new int[12][];
             takvim2[0] = new int[31];
             takvim2[1] = new int[28];
             takvim2[2] = new int[31];
@@ -78,7 +79,7 @@ namespace Proje2
             takvim2[11] = new int[31];
             takvim_sıfırla(takvim2);
 
-            int[][] takvim3 = new int[12][];//d seçeneğindeki problem için kullanılacak takvim
+            int[][] takvim3 = new int[12][];
             takvim3[0] = new int[31];
             takvim3[1] = new int[28];
             takvim3[2] = new int[31];
@@ -93,7 +94,7 @@ namespace Proje2
             takvim3[11] = new int[31];
             takvim_sıfırla(takvim3);
 
-            int[][] takvim4 = new int[12][];//d seçeneğindeki problem için kullanılacak takvim
+            int[][] takvim4 = new int[12][];
             takvim4[0] = new int[31];
             takvim4[1] = new int[28];
             takvim4[2] = new int[31];
@@ -107,7 +108,8 @@ namespace Proje2
             takvim4[10] = new int[30];
             takvim4[11] = new int[31];
             takvim_sıfırla(takvim4);
-
+            
+            hakkında();
             secim = menu();
 
             while (secim > 0 && secim < 4)
@@ -131,7 +133,7 @@ namespace Proje2
             Console.ReadKey();
         }
 
-        static int menu()
+        static int menu()// Kullanıcıya seçenekler sunulur
         {
             int a;
             Console.WriteLine("\n");
@@ -143,7 +145,16 @@ namespace Proje2
             return a;
         }
 
-        static void takvim_sıfırla(int[][] t)
+        static void hakkında()// Programı hazırlayanlar hakkında bilgi
+        {
+             Console.WriteLine("Yazarlar: \n Efe Gürkan Yalaman - efeyalaman@gmail.com "+
+                "\n İbrahim Üzüm - ibrahimuzum92@yahoo.com.tr " + "\n Burak Emre Dost - burakemredost@gmail.com"+
+               "\n Doğukan Sever - dogukansever@hotmail.com.tr\n");
+              Console.WriteLine("Lisans bilgileri:\n GNU GPL v2.1\n");
+
+        }
+
+        static void takvim_sıfırla(int[][] t)// Düzensiz dizi olan takvimin her bir eleamanını 0'a atar
         {
             for (int i = 0; i < t.Length; i++)//t vektörünün elemanları 0'a atanır
             {
@@ -157,26 +168,26 @@ namespace Proje2
         static int[] dogum_gunu_uret(Random a)//Birey için doğum günü ve ayı üretir
         {
             int[] dizi = new int[2];
-            int rastgele_dogum_gunu = a.Next(0, 31);
+            int rastgele_dogum_gunu = a.Next(0, 31);// Rastgele doğum günü atama
             dizi[0] = rastgele_dogum_gunu;
-            int rastgele_dogum_ayi = a.Next(0, 12);
+            int rastgele_dogum_ayi = a.Next(0, 12);// Rastgele doğum ayı atama
             dizi[1] = rastgele_dogum_ayi;
             return dizi;
         }
 
-        static int gun_degistir(Random d)//Doğum tarihindeki günü değiştirir
+        static int gun_degistir(Random d)// Doğum tarihindeki günü değiştirir
         {
             int c = d.Next(0, 31);
             return c;
         }
 
-        static void coklu_dogum_gunu(int[][] calendar)//Kullanıcıdan allınacak n birey sayısı için rastgele doğum günleri üretir
+        static void coklu_dogum_gunu(int[][] calendar)// Kullanıcıdan allınacak n birey sayısı için (case 1) rastgele doğum günleri üretir
         {
-            Console.WriteLine("Doğum günü sayısını giriniz:");//Birey sayısı inputu
+            Console.WriteLine("Doğum günü sayısını giriniz:");// Birey sayısı inputu
             int sayi = Convert.ToInt32(Console.ReadLine());
             int[] array;
 
-            //Random tipinden x ve y değişkenlerinin üretilmesi
+            // Random tipinden x ve y değişkenlerinin üretilmesi
             Random x = new Random();
             Random y = new Random();
 
@@ -185,7 +196,7 @@ namespace Proje2
             {
                 array = dogum_gunu_uret(x);
 
-                if (array[1] == 1)//Ayın şubat olması durumunda gün 27'den büyükse değişiklik yapılır
+                if (array[1] == 1)// Ayın şubat olması durumunda gün 27'den büyükse değişiklik yapılır
                 {
 
                     while (array[0] > 27)
@@ -194,7 +205,7 @@ namespace Proje2
 
                     }
                 }
-                if (array[1] == 3 || array[1] == 5 || array[1] == 8 || array[1] == 10)//Ay 30 gün cekiyor ise
+                if (array[1] == 3 || array[1] == 5 || array[1] == 8 || array[1] == 10)//Ay 30 gün cekiyor ise günün 31 olması durumunda değişiklik yapılır
                 {
 
                     while (array[0] > 29)
@@ -205,31 +216,31 @@ namespace Proje2
                     }
                 }
 
-                calendar[array[1]][array[0]] += 1;//takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
+                calendar[array[1]][array[0]] += 1;// Takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
 
 
             }
 
-            takvimYaz(calendar);
-            Console.WriteLine("\nÇakışma sayısı:" + cakışma_say_bul(calendar));
+            takvimYaz(calendar);// Oluşan takvim ekrana yazdırılır
+            Console.WriteLine("\nÇakışma sayısı:" + cakışma_say_bul(calendar));// Çakışma sayısı ekrana yazdırılır
 
         }
 
-        static void takvimYaz(int[][] calender)//Takvimi düzenli bir şekilde yazdırır
+        static void takvimYaz(int[][] calender)// Takvimi düzenli bir şekilde yazdırır
         {
             string[] ay_listesi = { "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık" };
-            Console.WriteLine("\n---------------------------------------------------------------------------------\n");
+            Console.WriteLine("\n---------------------------------------------------------------------\n");
             for (int i = 0; i < 12; i++)
             {
-                Console.Write(ay_listesi[i] + ": ");
+                Console.Write(String.Format("{0,-1}",ay_listesi[i] + ": "));
                 for (int j = 0; j < calender[i].Length; j++)
                 {
                     if (calender[i][j] >= 2)
                     {
-                        Console.BackgroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Red;// Çakışmanın 2'den fazla olması durumunda ekran kırmızı renk alır
                         Console.ForegroundColor = ConsoleColor.White;
                     }
-                    Console.Write(calender[i][j]);
+                    Console.Write(String.Format("{0,-1}",calender[i][j]));
                     Console.ResetColor();
                     Console.Write(" ");
                 }
@@ -238,9 +249,9 @@ namespace Proje2
 
         }
 
-        static void ozel_coklu_dogumGunu_uretme(int[][] calendar2, int[][] calendar3, int[][] calendar4)//D seçeneğindeki problem için kullanılan metottur
+        static void ozel_coklu_dogumGunu_uretme(int[][] calendar2, int[][] calendar3, int[][] calendar4)//  Case 3 için kullanılan metottur
         {
-            int number = 120;
+            int number = 120;// Numara sabittir, kullanıcıdan alınmaz
             int[] array2;
             int cakışma93;
             int cakışma94;
@@ -264,7 +275,7 @@ namespace Proje2
                 {
                     array2 = gun_ay_yil_uret(r);
 
-                    if (array2[1] == 1)//Ay şubat ise gün 27'den büyük olması durumunda değişikliğe uğrar
+                    if (array2[1] == 1)// Ay şubat ise gün 27'den büyük olması durumunda değişikliğe uğrar
                     {
 
                         while (array2[0] > 27)
@@ -273,7 +284,7 @@ namespace Proje2
 
                         }
                     }
-                    if (array2[1] == 3 || array2[1] == 5 || array2[1] == 8 || array2[1] == 10)//Ay 30 gün cekiyor ise
+                    if (array2[1] == 3 || array2[1] == 5 || array2[1] == 8 || array2[1] == 10)// Ay 30 gün cekiyor ise günün 31 olması durumunda değişiklik yapılır
                     {
 
                         while (array2[0] > 29)
@@ -284,17 +295,17 @@ namespace Proje2
                         }
                     }
 
-                    if (array2[2] == 0)//Yıl değeri 0 ise 1993'e denk gelir ve 93 takviminde artırma işlemi yapılır
+                    if (array2[2] == 0)// Yıl değeri 0 ise 1993'e denk gelir ve 93 takviminde artırma işlemi yapılır
                     {
                         takvim_93[array2[1]][array2[0]] += 1;
                     }
                     else
                     {
-                        if (array2[2] == 1)//Yıl değeri 1 ise 1994'e denk gelir ve 94 takviminde artırma işlemi yapılır
+                        if (array2[2] == 1)// Yıl değeri 1 ise 1994'e denk gelir ve 94 takviminde artırma işlemi yapılır
                         {
                             takvim_94[array2[1]][array2[0]] += 1;
                         }
-                        else //Yıl değeri 2 ise 1995'e denk gelir ve 95 takviminde artırma işlemi yapılır
+                        else // Yıl değeri 2 ise 1995'e denk gelir ve 95 takviminde artırma işlemi yapılır
                         {
 
                             takvim_95[array2[1]][array2[0]] += 1;
@@ -302,7 +313,8 @@ namespace Proje2
                     }
 
                 }
-
+                
+                //  93, 94 ve 95 takvimleri ile her birindeki çakışma sayısı ekrana verilir
                 cakışma93 = cakışma_say_bul(takvim_93);
                 takvimYaz(takvim_93);
                 Console.WriteLine("\n 1993 yılının çakışma sayısı:" + cakışma93);
@@ -316,7 +328,7 @@ namespace Proje2
                 Console.WriteLine("\n 1995 yılının çakışma sayısı:" + cakışma95);
 
                 k += 1;
-                if (k != 10)
+                if (k != 10)// Kullanıcıya her bir deneyi görmek isteyip istemediği sorulur
                 {
                     Console.WriteLine("\n" + (k + 1) + " no'lu deneyin sonucunu gormek için e yada E:");
                     karar = Console.ReadLine();
@@ -332,13 +344,15 @@ namespace Proje2
 
 
             }
+            
+            // Her bir takvim için 10 deneydeki çakışma yüzdeleri ekrana verilir
             Console.WriteLine("\n 1993 10 deney sonucunda yılının çakışma oranı %" + ((çakışma_toplamı1 * 100) / 120));
             Console.WriteLine("\n 1994 10 deney sonucunda yılının çakışma oranı %" + ((çakışma_toplamı2 * 100) / 120));
             Console.WriteLine("\n 1995 10 deney sonucunda yılının çakışma oranı %" + ((çakışma_toplamı3 * 100) / 120));
 
         }
 
-        static int[] gun_ay_yil_uret(Random e)//dogum_gunu_uret metoduna ek olarak doğum yılı üretir
+        static int[] gun_ay_yil_uret(Random e)// dogum_gunu_uret metoduna ek olarak doğum yılı üretir
         {
             int[] dizi2 = new int[3];
             int d_gunu = e.Next(0, 31);
@@ -350,7 +364,7 @@ namespace Proje2
             return dizi2;
         }
 
-        static int cakışma_say_bul(int[][] a)
+        static int cakışma_say_bul(int[][] a) // Takvim içerisindeki çakışma sayısını bulan metottur
         {
             int cakisma_toplami = 0;
 
@@ -369,7 +383,7 @@ namespace Proje2
             return cakisma_toplami;
         }
 
-        static void n_degerleri_icin_uretim(int[][] ajanda)
+        static void n_degerleri_icin_uretim(int[][] ajanda)// n=5, 10, 50, 100 ve 500 değerleri için (case 2) takvim üretir
         {
             int[] n = { 5, 10, 50, 100, 500 };
             int[] cakisma_dizisi = new int[50];
@@ -378,7 +392,7 @@ namespace Proje2
             for (int z = 0; z < 50; z++)
                 cakisma_dizisi[z] = 0;
 
-
+            // Bu kısımda 50 boyutlu olan ve takvimlerden oluşan bir sınıf dizisi oluşturulur
             BirTakvim[] takvimler = new BirTakvim[50];
 
             for (int t = 0; t < takvimler.Length; t++)
@@ -409,7 +423,7 @@ namespace Proje2
 
                             }
                         }
-                        if (array[1] == 3 || array[1] == 5 || array[1] == 8 || array[1] == 10)//Ay 30 gün cekiyor ise
+                        if (array[1] == 3 || array[1] == 5 || array[1] == 8 || array[1] == 10)// Ay 30 gün cekiyor ise günün 31 olması durumunda değişiklik yapılır
                         {
 
                             while (array[0] > 29)
@@ -420,7 +434,7 @@ namespace Proje2
                             }
                         }
 
-                        takvimler[l].kalendar[array[1]][array[0]] += 1;//takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
+                        takvimler[l].kalendar[array[1]][array[0]] += 1;// Takvimin seçilen gün ve aya denk gelen kısmının değeri 1 artırılır
 
 
                     }
@@ -439,7 +453,7 @@ namespace Proje2
 
             switch (seçenek)
             {
-                case 1:
+                case 1:// İsteğe bağlı olarak, n'in her bir değeri için üretilen deneyler ekrana yazdırılır
                     Console.WriteLine("5  kişilik deney sonucu için e'ye basınız:");
                     string karar = Console.ReadLine();
 
@@ -496,7 +510,7 @@ namespace Proje2
                     break;
 
 
-                case 2:
+                case 2:// Çakışma sayıları ve ortalamasını ekrana veren tablo oluşturulur
                     float ortalama = 0;
                     int u = 0;
                     string[] deney = { "n=5\t", "n=10\t", "n=50\t", "n=100\t", "n=500\t" };
