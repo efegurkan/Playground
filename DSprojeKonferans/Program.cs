@@ -205,7 +205,8 @@ namespace proje1
             Konuk yazdir = new Konuk();
             for (int i = 0; i < otelList.Length; i++)
             {
-                Console.WriteLine(otelList[i].otel_isim + " Oteli Konuk Listesi:\n");
+                Console.WriteLine(otelList[i].otel_isim + " Oteli Konuk Listesi:");
+                Console.WriteLine("Otelde kalan konuk sayısı : " + otelList[i].kalan+"\n");
                 for (int j = 0; j < otelList[i].kalanlar.Count; j++)
                 {
                     yazdir = (Konuk)otelList[i].kalanlar[j];
