@@ -1,4 +1,28 @@
-﻿using System;
+﻿/*
+ *  Konuk Yerleştirme Sistemi
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Copyright © 2012 Efe Gürkan YALAMAN, Doğukan Sever, Burak Emre Dost, İbrahim Üzüm 
+ * 
+ *   Authors: Efe Gürkan Yalaman - efeyalaman@gmail.com
+ *            İbrahim Üzüm - ibrahimuzum92@yahoo.com.tr
+ *            Burak Emre Dost - burakemredost@gmail.com
+ *            Doğukan Sever - dogukansever@hotmail.com.tr
+ */
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,7 +135,7 @@ namespace proje1
             Console.WriteLine("Yazarlar: \n Efe Gürkan Yalaman - efeyalaman@gmail.com "+
                 "\n İbrahim Üzüm - ibrahimuzum92@yahoo.com.tr \n Burak Emre Dost - burakemredost@gmail.com"+
                 "\n Doğukan Sever - dogukansever@hotmail.com.tr\n");
-            Console.WriteLine("Lisans bilgileri:\n GNU GPL v2.1");
+            Console.WriteLine("Lisans bilgileri:\n GNU GPL v3");
         }
 
         //static int menu()
